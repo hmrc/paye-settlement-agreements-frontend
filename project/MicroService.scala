@@ -27,20 +27,40 @@ trait MicroService {
   lazy val plugins : Seq[Plugins] = Seq.empty
   lazy val playSettings : Seq[Setting[_]] = Seq.empty
 
+
+  lazy val scoverageSettings = {
+    import scoverage._
+
+    val ScoverageExclusionPatterns = List(
+      "<empty>",
+      "definition.*",
+      "live.*",
+      "prod.*",
+      "app",
+      "testOnlyDoNotUseInAppConf.*",
+      "uk.gov.hmrc.payesettlementagreementsfrontend.config",
+      "uk.gov.hmrc.payesettlementagreementsfrontend.metrics",
+      "uk.gov.hmrc.BuildInfo")
+
+    Seq(
+      ScoverageKeys.coverageExcludedPackages := ScoverageExclusionPatterns.mkString("", ";", ""),
+      ScoverageKeys.coverageMinimum := 95,
+      ScoverageKeys.coverageFailOnMinimum := true,
+      ScoverageKeys.coverageHighlighting := true,
+      ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*filters.*;.*handlers.*;.*components.*;.*models.*;" +
+        ".*BuildInfo.*;.*javascript.*;.*FrontendAuditConnector.*;.*Routes.*;.*GuiceInjector;.*DataCacheConnector;" +
+        ".*ControllerConfiguration;.*LanguageSwitchController"
+    )
+  }
+
+
+
   lazy val microservice = Project(appName, file("."))
     .enablePlugins(Seq(play.sbt.PlayScala, SbtAutoBuildPlugin, SbtGitVersioning, SbtDistributablesPlugin) ++ plugins : _*)
     .settings(playSettings : _*)
     .settings(RoutesKeys.routesImport ++= Seq("uk.gov.hmrc.payesettlementagreementsfrontend.models._"))
-    .settings(
-      ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*filters.*;.*handlers.*;.*components.*;.*models.*;" +
-        ".*BuildInfo.*;.*javascript.*;.*FrontendAuditConnector.*;.*Routes.*;.*GuiceInjector;.*DataCacheConnector;" +
-        ".*ControllerConfiguration;.*LanguageSwitchController",
-      ScoverageKeys.coverageMinimum := 90,
-      ScoverageKeys.coverageFailOnMinimum := true,
-      ScoverageKeys.coverageHighlighting := true,
-      parallelExecution in Test := false
-    )
     .settings(scalaSettings: _*)
+    .settings(scoverageSettings: _*)
     .settings(publishingSettings: _*)
     .settings(defaultSettings(): _*)
     .settings(
