@@ -44,7 +44,7 @@ trait MicroService {
 
     Seq(
       ScoverageKeys.coverageExcludedPackages := ScoverageExclusionPatterns.mkString("", ";", ""),
-      ScoverageKeys.coverageMinimum := 95,
+      ScoverageKeys.coverageMinimum := 70,
       ScoverageKeys.coverageFailOnMinimum := true,
       ScoverageKeys.coverageHighlighting := true,
       ScoverageKeys.coverageExcludedFiles := "<empty>;Reverse.*;.*filters.*;.*handlers.*;.*components.*;.*models.*;" +
