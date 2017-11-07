@@ -78,9 +78,9 @@ trait MicroService {
       testGrouping in IntegrationTest := oneForkedJvmPerTest((definedTests in IntegrationTest).value),
       parallelExecution in IntegrationTest := false)
       .settings(resolvers ++= Seq(
-        Resolver.jcenterRepo,
+        Resolver.bintrayRepo("hmrc", "releases"),
+        Resolver.jcenterRepo
  //       Resolver.bintrayRepo("emueller", "maven"),
-        Resolver.bintrayRepo("hmrc", "releases")
       ))
     .settings(
       // concatenate js
