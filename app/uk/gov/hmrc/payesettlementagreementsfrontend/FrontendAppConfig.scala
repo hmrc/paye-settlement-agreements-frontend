@@ -40,6 +40,8 @@ class FrontendAppConfig @Inject() (override val configuration: Configuration) ex
   lazy val authUrl = baseUrl("auth")
   lazy val loginUrl = loadConfig("urls.login")
   lazy val loginContinueUrl = loadConfig("urls.loginContinue")
+  lazy val desUrl = baseUrl("des")
+  lazy val psaBaseUrl = s"${desUrl}/paye-settlement-agreements"
 
   lazy val languageTranslationEnabled = configuration.getBoolean("microservice.services.features.welsh-translation").getOrElse(true)
   def languageMap: Map[String, Lang] = Map(
