@@ -38,6 +38,7 @@ trait MicroService {
       "prod.*",
       "app",
       "testOnlyDoNotUseInAppConf.*",
+      ".*repositories.*",
       "uk.gov.hmrc.payesettlementagreementsfrontend.config",
       "uk.gov.hmrc.payesettlementagreementsfrontend.metrics",
       "uk.gov.hmrc.BuildInfo")
